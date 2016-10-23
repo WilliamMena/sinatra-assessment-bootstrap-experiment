@@ -1,0 +1,63 @@
+<h1>Welcome <%= @user.username.capitalize %></h1>
+
+<section id="home_text">
+<h2>Your Feed</h2>
+<% if @user.following.empty? %>
+  <p>To have some activity on your feed, you need to follow some people</p>
+<% else %>
+  <div id="home_following_recipe">
+    <sub>Click recipe title to view full recipe</sub>
+    <% home_number_view.times do |i| %>
+      <% recipe = @user.following[i].recipes.last %>
+      <p><b><a href="/recipes/<%= recipe.id %>"><%= recipe.name %></a></b></p>
+      <p><b>Ingredients:</b> <%= recipe.ingredients.split("*-*-*").join(', ')[0..100] %>.....</p>
+      <p><b>Serving Size:</b> <%= recipe.serving_size %></p>
+      <p><b>Cook Time:</b> <%= recipe.cook_time %></p>
+      <p><b>Directions:</b> <%= recipe.directions[0..250] %>.....</p>
+    <% end %>
+  </div>
+<% end %>
+
+</section>
+
+<div id="random_recipe">
+<h3>Random Recipe</h3>
+
+<h3><a href="/recipes/<%= @recipe.id %>"><%= @recipe.name %></a></h3>
+
+
+Category: <a href="/categories/<%= @recipe.category.name %>"><%= @recipe.category.name %></a>
+<br>
+<b>Ingredients:</b> <%= @recipe.ingredients.split("*-*-*").join(', ')[0..26] %>.....
+<br>
+<b>Directions:</b> <%= @recipe.directions[0..30] %>.....
+<br>
+<sub>Click the recipe title for the full recipe</sub>
+</div>
+
+
+<div id="friend_list">
+  <h3><a href="/follow_list">Follow List</a></h3>
+
+  <% if @user.following.empty? %>
+    You aren't following anyone at the moment
+
+  <% else %>
+    Following <%= @user.following.count %> user(s)
+  <% end %>
+
+
+  <% if @user.followers.empty? %>
+    <br></br>
+    No followers at at the moment
+
+  <% else %>
+    <br></br>
+    You have <%= @user.followers.count %> follower(s)
+  <% end %>
+
+
+
+
+
+</div>

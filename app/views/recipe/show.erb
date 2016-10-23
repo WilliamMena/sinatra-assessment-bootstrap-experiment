@@ -1,0 +1,42 @@
+<div id="recipe_view">
+<h1><%= @recipe.name %></h1>
+
+<% if current_user == @recipe.user %>
+
+<p>Your Recipe</p>
+<a href="/recipes/<%= @recipe.id %>/edit">Edit this recipe</a>
+<br>
+<a href="/recipes/<%= @recipe.id %>/delete">Delete this recipe</a>
+
+<% else %>
+
+<p>Recipe by <a href="/users/<%= @recipe.user.slug %>"><%= @recipe.user.username %></a></p>
+
+<% end %>
+
+
+<h3>Serving Size</h3> <p><%= @recipe.serving_size %></p>
+
+<h3>Cook Time</h3> <p><%= @recipe.cook_time %></p>
+
+<h3>Ingredients</h3>
+<ul>
+<% if @recipe.user.username.include?("Food Network Scraper") %>
+  <% @recipe.ingredients.split("*-*-*").each do |t| %>
+    <li><%= t.strip.capitalize %></li>
+  <% end %>
+<% else %>
+
+  <% @recipe.ingredients.split(",").each do |t| %>
+    <li><%= t.strip.capitalize %></li>
+  <% end %>
+<% end %>
+</ul>
+
+<h3>Directions</h3>
+  <p><%= @recipe.directions %></p>
+
+
+
+
+</div>
